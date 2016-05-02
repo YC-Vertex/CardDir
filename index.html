@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CardDir</title>
+
+    <script src="jquery.min.js"></script>
+    <script src="three.min.js"></script>
+    <script src="material.min.js"></script>
+    <script src="index.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="material.min.css">
+  </head>
+  <body>
+
+    <div class="frame-container">
+      <div class="left">
+      </div>
+      <div class="right">
+      </div>
+      <div class="overview">
+      </div>
+    </div>
+
+    <div class="help-overlap">
+      <div class="help-card-wrapper">
+        <div class="mdl-card mdl-shadow--2dp help-card">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text"><i class="material-icons title-icon">help_outline</i>帮助</h2>
+          </div>
+
+          <div class="mdl-card__supporting-text">
+            点击 <i class="material-icons">3d_rotation</i> 切换到头戴 VR 模式<br>
+            点击 <i class="material-icons">stay_current_landscape</i> 切换到手持模式<br>
+          </div>
+          <div class="mdl-card__supporting-text">
+            点击 <i class="material-icons">zoom_out</i> 与 <i class="material-icons">zoom_in</i> 改变头戴模式下组件的景深<br>
+            这个选项在手持模式下没有效果
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls mdl-shadow--2dp">
+      <button class="control mdl-js-button mdl-js-ripple-effect" id="btn-toggle-mode">
+        <i class="material-icons md-24 switch-to-cardboard">3d_rotation</i>
+        <i class="material-icons md-24 switch-to-overview">stay_current_landscape</i>
+      </button><button class="control mdl-js-button mdl-js-ripple-effect" id="btn-zoom-in">
+        <i class="material-icons md-24">zoom_in</i>
+      </button><button class="control mdl-js-button mdl-js-ripple-effect" id="btn-zoom-out">
+        <i class="material-icons md-24">zoom_out</i>
+      </button><button class="control mdl-js-button mdl-js-ripple-effect" id="btn-help">
+        <i class="material-icons md-24">help</i>
+      </button>
+    </div>
+
+  </body>
+</html>

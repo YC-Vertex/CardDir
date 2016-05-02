@@ -1,0 +1,223 @@
+body {
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+}
+
+.frame-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.frame-container.cardboard .left {
+  display: block;
+}
+
+.frame-container.cardboard .right {
+  display: block;
+}
+
+.frame-container.cardboard .overview {
+  display: none;
+}
+
+.frame-container .left {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 50%;
+
+  overflow: hidden;
+}
+
+.frame-container .right {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 50%;
+
+  overflow: hidden;
+}
+
+.frame-container .overview {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  overflow: hidden;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 2px;
+  background-color: white;
+}
+
+.control {
+  padding: 12px;
+  height: 48px;
+  width: 48px;
+
+  font-size: 24px;
+  line-height: 24px;
+
+  border: none;
+  background: transparent;
+
+  outline: none;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-right: 1px solid rgba(0,0,0,.12);
+
+  cursor: pointer;
+
+  color: rgba(0,0,0,.70);
+}
+
+.control:first-child {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.control:last-child {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-right: none;
+}
+
+.mode-cardboard .material-icons.switch-to-cardboard {
+  display: none;
+}
+
+.mode-cardboard .material-icons.switch-to-overview {
+  display: inline;
+}
+
+.material-icons.switch-to-overview {
+  display: none;
+}
+
+.material-icons.switch-to-cardboard {
+  display: inline;
+}
+
+/* Help */
+
+.help-overlap {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+
+  background-color: rgba(0,0,0,.3);
+
+  transition-property: opacity, transform;
+  transition-timing-function: ease-in-out, linear;
+  transition-duration: 0.2s, 0s;
+  transition-delay: 0s, 0.2s;
+
+  opacity: 0;
+  transform: translateY(10000px);
+}
+
+.help-overlap.shown {
+  transition-delay: 0s, 0s;
+
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.help-card-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.help-card {
+  margin: 0 auto;
+}
+
+/* Material icons */
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: url(fonts/MaterialIcons-Regular.woff2) format('woff2'),
+       url(fonts/MaterialIcons-Regular.woff) format('woff'),
+       url(fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/* Rules for general disabled icons */
+.material-icons.md-inactive {
+  opacity: 0.3;
+}
+
+/* Custom! */
+.material-icons.title-icon {
+  font-size: 33px;
+  margin-right: 8px;
+}
+
+.mdl-card__supporting-text .material-icons {
+  vertical-align: middle;
+}
