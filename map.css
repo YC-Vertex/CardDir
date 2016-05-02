@@ -1,0 +1,32 @@
+.map-mask {
+  width: 250px;
+  height: 250px;
+
+  overflow: hidden;
+  border-radius: 50%;
+  transform: translateZ(0);
+  transition: height 0.5s ease, width 0.5s ease;
+}
+
+.map-mask.expanded {
+  height: 2000px;
+  width: 2000px;
+}
+
+.map-positioner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.overview .map-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.half .map-container {
+  height: 100vh;
+  width: 50vw;
+}

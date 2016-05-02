@@ -4,17 +4,87 @@ if(screen.orientation && screen.orientation.lock) {
 }
 
 /* Setup sence */
-var scene = new THREE.Scene();
+var primaryScene = new THREE.Scene();
+var secondaryScene = new THREE.Scene();
 
-var geometry = new THREE.BoxGeometry(200, 200, 200);
-var material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-var mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+/* Declare CSS3D Objects */
+var primaryMapObject;
+var secondaryMapObject;
+
+var mapBase = {
+  px: -300,
+  py: -300,
+  pz: 0,
+  rx: CDMath.toRad(-35),
+  ry: CDMath.toRad(25),
+  rz: 0
+}
+
+var mapRestoreBase = $.extend({}, mapBase);
+var mapExpandBase = {
+  px: 0,
+  py: 0,
+  pz: 0,
+  rx: 0,
+  ry: 0,
+  rz: 0,
+}
+
+var mapEasing = bezier(0.17, 0.67, 0.83, 0.67);
+var mapStartTime = -1;
+var mapEaseBase;
+var mapEaseTarget;
+
+function mapRestorePosition() {
+  mapStartTime = performance.now();
+  mapEaseBase = mapBase;
+  mapEaseTarget = mapRestoreBase;
+}
+
+function mapGotoExpandPosition() {
+  mapStartTime = performance.now();
+  mapEaseBase = mapBase;
+  mapEaseTarget = mapExpandBase;
+}
+
+function doMapAnimation(now) {
+  if(mapStartTime == -1 || now - mapStartTime > 5000) return;
+  else {
+    console.log("ANIMATE");
+    console.log(mapEaseTarget);
+    var easeValue = mapEasing((now-mapStartTime) / 5000);
+    mapBase.px = mapEaseBase.px * (1 - easeValue) + mapEaseTarget.px * easeValue;
+    mapBase.py = mapEaseBase.py * (1 - easeValue) + mapEaseTarget.py * easeValue;
+    mapBase.pz = mapEaseBase.pz * (1 - easeValue) + mapEaseTarget.pz * easeValue;
+    mapBase.rx = mapEaseBase.rx * (1 - easeValue) + mapEaseTarget.rx * easeValue;
+    mapBase.ry = mapEaseBase.ry * (1 - easeValue) + mapEaseTarget.ry * easeValue;
+    mapBase.rz = mapEaseBase.rz * (1 - easeValue) + mapEaseTarget.rz * easeValue;
+  }
+}
+
+function applyMap() {
+  //TODO: acceleration
+  primaryMapObject.position.x = mapBase.px;
+  primaryMapObject.position.y = mapBase.py;
+  primaryMapObject.position.z = mapBase.pz;
+  primaryMapObject.rotation.x = mapBase.rx;
+  primaryMapObject.rotation.y = mapBase.ry;
+  primaryMapObject.rotation.z = mapBase.rz;
+
+  secondaryMapObject.position.x = mapBase.px;
+  secondaryMapObject.position.y = mapBase.py;
+  secondaryMapObject.position.z = mapBase.pz;
+  secondaryMapObject.rotation.x = mapBase.rx;
+  secondaryMapObject.rotation.y = mapBase.ry;
+  secondaryMapObject.rotation.z = mapBase.rz;
+}
 
 /* Setup cameras */
-var cameraOverview = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-var cameraLeft = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight / 2, 1, 10000);
-var cameraRight = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight / 2, 1, 10000);
+
+// Most cellphone cameras has a FOV of around 50. So 50 is the go
+var cameraOverview = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+var cameraLeft = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight / 2, 1, 10000);
+var cameraRight = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight / 2, 1, 10000);
 
 cameraOverview.position.z = 1000;
 cameraLeft.position.z = 1000;
@@ -24,15 +94,24 @@ cameraLeft.position.x = -100;
 cameraRight.position.x = 100;
 
 /* Setup renderer */
-var rendererOverview = new THREE.WebGLRenderer({ alpha: true });
-var rendererLeft = new THREE.WebGLRenderer({ alpha: true });
-var rendererRight = new THREE.WebGLRenderer({ alpha: true });
+var rendererOverview = new THREE.CSS3DRenderer({ alpha: true });
+var rendererLeft = new THREE.CSS3DRenderer({ alpha: true });
+var rendererRight = new THREE.CSS3DRenderer({ alpha: true });
 
 rendererOverview.setSize(window.innerWidth, window.innerHeight);
 rendererLeft.setSize(window.innerWidth / 2, window.innerHeight);
 rendererRight.setSize(window.innerWidth / 2, window.innerHeight);
 
 function setupElements() {
+  var primaryMap = document.getElementById("primary-map-mask");
+  var secondaryMap = document.getElementById("secondary-map-mask");
+  
+  primaryMapObject = new THREE.CSS3DObject(primaryMap);
+  secondaryMapObject = new THREE.CSS3DObject(secondaryMap);
+
+  primaryScene.add(primaryMapObject);
+  secondaryScene.add(secondaryMapObject);
+
   $(".frame-container .overview").append(rendererOverview.domElement);
   $(".frame-container .left").append(rendererLeft.domElement);
   $(".frame-container .right").append(rendererRight.domElement);
@@ -43,21 +122,21 @@ function setupElements() {
 var cardboardMode = false;
 var animating = false;
 
-function animate() {
+function animate(time) {
   if(animating) requestAnimationFrame(animate);
 
   /* Detect acceleration */
   //TODO: here
   //
-  mesh.rotation.x += 0.01;
-  mesh.rotation.z += 0.02;
-  mesh.rotation.y += 0.03;
+
+  doMapAnimation(time);
+  applyMap();
 
   if(cardboardMode) {
-    rendererRight.render(scene, cameraRight);
-    rendererLeft.render(scene, cameraLeft);
+    rendererLeft.render(primaryScene, cameraLeft);
+    rendererRight.render(secondaryScene, cameraRight);
   } else {
-    rendererOverview.render(scene, cameraOverview);
+    rendererOverview.render(primaryScene, cameraOverview);
   }
 }
 
@@ -74,13 +153,15 @@ function switchToOverview() {
 function startAnimation() {
   if(!animating) {
     animating = true;
-    animate();
+    requestAnimationFrame(animate);
   }
 }
 
 function stopAnimation() {
   animating = false;
 }
+
+/* Initialize */
 
 $(document).ready(function() {
   setupElements();
@@ -99,6 +180,14 @@ $(document).ready(function() {
 
   $("#btn-help").click(function() {
     $(".help-overlap").toggleClass("shown");
+  });
+
+  $(".help-overlap").click(function() {
+    $(".help-overlap").removeClass("shown");
+  });
+
+  $(".help-card").click(function(event) {
+    event.stopPropagation();
   });
 
   var zoomInDisabled = false;
@@ -138,11 +227,17 @@ $(document).ready(function() {
     updateZoomBtnState();
   })
 
-  $(".help-overlap").click(function() {
-    $(".help-overlap").removeClass("shown");
-  });
+  var expanded = false;
 
-  $(".help-card").click(function(event) {
-    event.stopPropagation();
+  $("#btn-map").click(function() {
+    if(expanded) {
+      $(".map-mask").removeClass("expanded");
+      mapRestorePosition();
+      expanded = false;
+    } else {
+      $(".map-mask").addClass("expanded");
+      mapGotoExpandPosition();
+      expanded = true;
+    }
   });
 });
