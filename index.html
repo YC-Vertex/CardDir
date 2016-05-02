@@ -6,25 +6,19 @@
 
     <script src="jquery.min.js"></script>
     <script src="three.min.js"></script>
-    <script src="CSS3DRenderer.js"></script>
     <script src="material.min.js"></script>
-    <script src="bezier.js"></script>
-
-    <script src="mathlib.js"></script>
-    <script src="map.js"></script>
-    <script src="index.js"></script>
-
-    <script async defer src="https://maps.google.cn/maps/api/js?key=AIzaSyCF7lLKy7raWRnhVjVRQlDSOLBKaiundvc&callback=initMap"></script>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="map.css">
     <link rel="stylesheet" href="material.min.css">
   </head>
+
   <body>
     <div class="frame-container">
       <div class="left">
+				<video id="videoA"></video>
       </div>
       <div class="right">
+				<video id="videoB"></video>
       </div>
       <div class="overview">
       </div>
@@ -42,19 +36,6 @@
             点击 <i class="material-icons">stay_current_landscape</i> 切换到手持模式<br>
           </div>
           <div class="mdl-card__supporting-text">
-            点击 <i class="material-icons">map</i> 显示完整地图<br>
-            在头戴模式下您可以通过仰头达到同样效果<br>
-          </div>
-          <div class="mdl-card__supporting-text">
-            在完整地图模式中，您可以拖动地图或者晃动设备以移动地图，或者点击某个图标查看这个活动的详细信息<br>
-            在头戴模式中，您可以通过晃动头部移动地图，或者注视某一个图标查看这个活动的详细信息<br>
-          </div>
-          <div class="mdl-card__supporting-text">
-            在完整地图模式中，按住一个图标 3 秒以上可以将这个图标锁定在小地图上，并在主视角中显示<br>
-            在头戴模式中，您可以通过注视某一个图标 3 秒以上达到同样效果<br>
-            对一个已锁定的图标进行相同的操作会导致其被解锁
-          </div>
-          <div class="mdl-card__supporting-text">
             点击 <i class="material-icons">zoom_out</i> 与 <i class="material-icons">zoom_in</i> 改变头戴模式下组件的景深<br>
             这个选项在手持模式下没有效果
           </div>
@@ -62,24 +43,10 @@
       </div>
     </div>
 
-    <div class="map-mask overview mdl-shadow--2dp" id="primary-map-mask">
-      <div class="map-positioner">
-        <div class="map-container" id="primary-map"></div>
-      </div>
-    </div>
-
-    <div class="map-mask hidden mdl-shadow--2dp" id="secondary-map-mask">
-      <div class="map-positioner">
-        <div class="map-container" id="secondary-map"></div>
-      </div>
-    </div>
-
     <div class="controls mdl-shadow--2dp">
       <button class="control mdl-js-button mdl-js-ripple-effect" id="btn-toggle-mode">
         <i class="material-icons md-24 switch-to-cardboard">3d_rotation</i>
         <i class="material-icons md-24 switch-to-overview">stay_current_landscape</i>
-      </button><button class="control mdl-js-button mdl-js-ripple-effect" id="btn-map">
-        <i class="material-icons md-24">map</i>
       </button><button class="control mdl-js-button mdl-js-ripple-effect" id="btn-zoom-in">
         <i class="material-icons md-24">zoom_in</i>
       </button><button class="control mdl-js-button mdl-js-ripple-effect" id="btn-zoom-out">
@@ -88,5 +55,7 @@
         <i class="material-icons md-24">help</i>
       </button>
     </div>
+
+    <script src="index.js"></script>
   </body>
 </html>
