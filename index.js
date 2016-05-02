@@ -137,4 +137,12 @@ $(document).ready(function() {
 
     updateZoomBtnState();
   })
+
+  $(".help-overlap").click(function() {
+    $(".help-overlap").removeClass("shown");
+  });
+
+  $(".help-card").click(function(event) {
+    event.stopPropagation();
+  });
 });
