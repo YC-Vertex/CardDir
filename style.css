@@ -13,19 +13,19 @@ body {
   bottom: 0;
 }
 
-.frame-container.cardboard .left {
+.frame-container.cardboard > .left {
   display: block;
 }
 
-.frame-container.cardboard .right {
+.frame-container.cardboard > .right {
   display: block;
 }
 
-.frame-container.cardboard .overview {
+.frame-container.cardboard > .overview {
   display: none;
 }
 
-.frame-container .left {
+.frame-container > .left {
   display: none;
   position: absolute;
   top: 0;
@@ -36,7 +36,7 @@ body {
   overflow: hidden;
 }
 
-.frame-container .right {
+.frame-container > .right {
   display: none;
   position: absolute;
   top: 0;
@@ -47,7 +47,7 @@ body {
   overflow: hidden;
 }
 
-.frame-container .overview {
+.frame-container > .overview {
   display: block;
   position: absolute;
   top: 0;

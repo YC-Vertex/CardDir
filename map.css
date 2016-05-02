@@ -13,6 +13,10 @@
   width: 2000px;
 }
 
+.map-mask.hidden {
+  opacity: 0;
+}
+
 .map-positioner {
   position: absolute;
   top: 50%;

@@ -24,7 +24,7 @@ var mapRestoreBase = $.extend({}, mapBase);
 var mapExpandBase = {
   px: 0,
   py: 0,
-  pz: 0,
+  pz: -200,
   rx: 0,
   ry: 0,
   rz: 0,
@@ -50,8 +50,6 @@ function mapGotoExpandPosition() {
 function doMapAnimation(now) {
   if(mapStartTime == -1 || now - mapStartTime > 5000) return;
   else {
-    console.log("ANIMATE");
-    console.log(mapEaseTarget);
     var easeValue = mapEasing((now-mapStartTime) / 5000);
     mapBase.px = mapEaseBase.px * (1 - easeValue) + mapEaseTarget.px * easeValue;
     mapBase.py = mapEaseBase.py * (1 - easeValue) + mapEaseTarget.py * easeValue;
@@ -90,8 +88,8 @@ cameraOverview.position.z = 1000;
 cameraLeft.position.z = 1000;
 cameraRight.position.z = 1000;
 
-cameraLeft.position.x = -100;
-cameraRight.position.x = 100;
+cameraLeft.position.x = -40;
+cameraRight.position.x = 40;
 
 /* Setup renderer */
 var rendererOverview = new THREE.CSS3DRenderer({ alpha: true });
@@ -142,11 +140,21 @@ function animate(time) {
 
 function switchToCardboard() {
   cardboardMode = true;
+
+  //TODO: Update google map
+
+  $("#primary-map-mask").removeClass("overview").addClass("half");
+  $("#secondary-map-mask").removeClass("hidden").addClass("half");
+
   $(".frame-container").addClass("cardboard");
 }
 
 function switchToOverview() {
   cardboardMode = false;
+
+  $("#primary-map-mask").addClass("overview").removeClass("half");
+  $("#secondary-map-mask").addClass("hidden").removeClass("half");
+
   $(".frame-container").removeClass("cardboard");
 }
 
