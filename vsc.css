@@ -9,16 +9,13 @@ html, body, .frame-container {
 }
 
 video {
-  z-index: 1;
 	display: block;
 	width: 100%;
 	height: 100%;
 	position: absolute;
 }
 
-canvas {
-	z-index: 2;
-	position: absolute;
-	left: 0;
+hidden-video {
+	display: none;
 }
 

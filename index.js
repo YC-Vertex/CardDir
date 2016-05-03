@@ -147,10 +147,14 @@ function switchToCardboard() {
   $("#secondary-map-mask").removeClass("hidden").addClass("half");
 
   $(".frame-container").addClass("cardboard");
+
+	showCamera();
 }
 
 function switchToOverview() {
   cardboardMode = false;
+
+	stopCamera();
 
   $("#primary-map-mask").addClass("overview").removeClass("half");
   $("#secondary-map-mask").addClass("hidden").removeClass("half");
@@ -173,6 +177,8 @@ function stopAnimation() {
 
 $(document).ready(function() {
   setupElements();
+  setupCamera();
+
   switchToOverview();
   startAnimation();
 
